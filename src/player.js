@@ -5,7 +5,7 @@ JSWebrtc.Player = (function () {
     var Player = function (url, options) {
         this.options = options || {};
 
-        if (!url.match(/^webrtc?:\/\//)) {
+        if (!url.match(/^webrtcs?:\/\//)) {
             throw ("JSWebrtc just work with webrtc");
         }
 
@@ -50,8 +50,7 @@ JSWebrtc.Player = (function () {
                 if (api.lastIndexOf('/') != api.length - 1) {
                     api += '/';
                 }
-
-                var url = 'http://' + _self.urlParams.server + ':' + port + api;
+                var url = _self.urlParams.apiPrefix + _self.urlParams.server + ':' + port + api;
                 for (var key in _self.urlParams.user_query) {
                     if (key != 'api' && key != 'play') {
                         url += '&' + key + '=' + _self.urlParams.user_query[key];

@@ -47,6 +47,11 @@ var JSWebrtc = {
 	},
 
 	ParseUrl: function (rtmp_url) {
+		var apiPrefix = 'http://';
+		if(rtmp_url.indexOf('webrtcs://') >= 0) {
+			apiPrefix  = 'https://';
+			rtmp_url = rtmp_url.replace('webrtcs://', 'webrtc://');
+		}
 		// @see: http://stackoverflow.com/questions/10469575/how-to-use-location-object-to-parse-url-without-redirecting-the-page-in-javascri
 		var a = document.createElement("a");
 		a.href = rtmp_url.replace("rtmp://", "http://")
@@ -99,13 +104,14 @@ var JSWebrtc = {
 
 		var ret = {
 			url: rtmp_url,
+			apiPrefix: apiPrefix,
 			schema: schema,
 			server: a.hostname, port: port,
 			vhost: vhost, app: app, stream: stream
 		};
 
 		JSWebrtc.FillQuery(a.search, ret);
-
+		
 		return ret;
 	},
 
